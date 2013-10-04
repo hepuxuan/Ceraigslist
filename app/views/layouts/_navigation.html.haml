@@ -1,0 +1,17 @@
+.brand
+  Ceraigslist
+
+%ul.nav.pull-left
+  %ul{class: 'nav'}
+    %li= link_to 'Sale list',product_infos_path
+    %li= link_to 'Post a new SALE!', new_product_info_path
+%ul.nav.pull-right
+  %ul{class: 'nav'}
+    - if @current_user
+      =link_to "Sign out", session_path(0), method: :delete, class: 'btn'
+    - else
+      = form_tag sessions_path, method: :post, class: 'navbar-form pull-right' do
+        = text_field '',"email", placeholder: 'Email' 
+        = password_field "","password", placeholder: 'Password' 
+        = submit_tag 'Sign in', class: 'btn'
+

@@ -1,0 +1,9 @@
+= form_tag product_infos_path, method: :get, class: 'form-search', id: 'search-form' do
+  .control-group
+    .controls
+      = number_field_tag :price_min, nil, placeholder: 'Price Min', class: 'input-small'
+      = number_field_tag :price_max, nil, placeholder: 'Price Max', class: 'input-small'
+      = text_field_tag :tag, nil, placeholder: 'Search'
+      = select_tag(:sort, options_for_select(['price low to high', 'price high to low', 'post date']), class: 'input-medium')
+      = submit_tag 'GO!', class: 'btn'
+= render partial: 'products'

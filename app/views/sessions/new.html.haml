@@ -1,0 +1,13 @@
+-# edit.html.haml using partial
+
+%h1 Sign in
+
+= form_tag sessions_path, method: :post do
+  = label :session, :email, 'Email'
+  = text_field '',"email"
+  %br
+  = label :session, :password, 'Password'
+  = password_field "","password"
+  %br
+  = submit_tag 'Sign in', class: 'btn'
+  

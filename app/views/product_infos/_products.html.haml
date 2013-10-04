@@ -1,0 +1,18 @@
+#products
+  - if @product_infos 
+    %table{class: 'table table-striped index-table'}
+      %thead
+        %tr
+          %th Title
+          %th Date
+          %th Price
+      %tbody
+        - @product_infos.each do |product_info|
+          %tr
+            %td= link_to product_info.title, product_info_path(product_info.id)
+            %td= product_info.post_date.to_date
+            %td= "#{product_info.price}$"
+    .pagination
+      = will_paginate @product_infos, :renderer => 'BootstrapPaginationHelper::LinkRenderer'
+  
+    

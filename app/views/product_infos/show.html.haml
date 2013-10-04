@@ -1,0 +1,31 @@
+- if @product_info
+  %h2= "#{@product_info.title} -#{@product_info.price}$"
+  %p 
+    Tag: 
+    = raw @product_info.tag_list.map { |t| link_to t, product_infos_path(tag: t) }.join(', ')
+    %br
+    - if @current_user && @product_info.user_id == @current_user.id
+      [
+      = link_to 'edit', edit_product_info_path
+      ]
+      [
+      = link_to 'close', product_info_path, method: :delete
+      ]
+  - if @product_info.source == ProductInfo::CRAGLIST
+    %p= link_to 'link to Craglist', @product_info.uri
+
+  - assets = @product_info.assets
+  - if @product_info.assets && !assets.empty?
+    - if @product_info.source == ProductInfo::CRAGLIST
+      = image_tag assets.first.crag_uri, id: 'product_img'
+      %br
+      - @product_info.assets.each do |asset|
+        = link_to image_tag(asset.crag_thumb_uri), asset.crag_uri, class: 'product_img_link'
+    - elsif @product_info.source == ProductInfo::LOCAL
+      = image_tag assets.first.image.url, id: 'product_img'
+      %br
+      - @product_info.assets.each do |asset|
+        = link_to image_tag(asset.image.url(:thumb)), asset.image.url, class: 'product_img_link'
+  .product_description
+    %p= @product_info.body
+    %p= "location: #{@product_info.address} #{@product_info.city} #{@product_info.state}"

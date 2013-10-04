@@ -1,0 +1,34 @@
+= form_for @product_info, :html => { multipart: true }, class: 'product_info_form' do |form|
+  .row
+    .span3
+      = form.label :title, 'Posting Title'
+      = form.text_field :title
+    .span3
+      = form.label :price, 'Price'
+      = form.number_field :price
+    .span6
+      = form.label :tag_list, "Tags (separated by commas)"
+      = form.text_field :tag_list
+  .row
+    .span6
+      = form.fields_for :assets do |asset|
+        - if asset.object.new_record?
+          = asset.label :image, "Image File"
+          = asset.file_field :image
+  .row
+    .span6
+      = form.label :body, 'Posting Description'
+      = form.text_area :body, rows: '10', cols: '80'
+  .row
+    .span6
+      = label :address, :same_as_user do
+        = check_box :address, :same_as_user
+        Same As Your Address
+      = label :address, :address1, 'Address Line 1'
+      = text_field :address, :address1
+      = label :address, :address2, 'Address Line 2'
+      = text_field :address, :address2
+      = form.subregion_select :state, 'US'
+      = form.label :city, 'City'
+      = form.text_field :city
+  = form.submit 'Save', class: 'btn btn-primary save-btn'

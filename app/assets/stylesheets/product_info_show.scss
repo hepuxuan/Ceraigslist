@@ -1,0 +1,25 @@
+#product_info_body,
+#address_address1,
+#product_info_tag_list {
+  width: 95%;
+}
+.sidebar {
+  float: left;
+  width: 200px;
+  min-height: 100%;
+}
+
+.sidebar .nav {
+  -webkit-box-shadow: 0 4px 8px rgba(0,0,0,.065);
+  -moz-box-shadow: 0 4px 8px rgba(0,0,0,.065);
+  box-shadow: 0 4px 8px rgba(0,0,0,.065);
+}
+
+#product_info .row {
+  padding-top: 10px;
+}
+
+.product_description {
+  padding-top: 10px;
+}
+
