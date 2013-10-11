@@ -1,5 +1,5 @@
 # coding: UTF-8
-class ModifyProductBody < ActiveRecord::Migration
+class ModifyProductString < ActiveRecord::Migration
   def change
     remove_column :product_infos, :title
     remove_column :product_infos, :body
