@@ -15,6 +15,7 @@
 #
 every 2.hours do
   rake 'download_data_from_craglish'
+  rake ts:index
 end
 
 every 30.minutes do

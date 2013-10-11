@@ -3,7 +3,7 @@ class CreateProductInfos < ActiveRecord::Migration
   def change
     create_table :product_infos do |t|
       t.references :user
-      t.integer :product_id
+      t.integer :product_id, :limit => 8
       t.datetime :post_date
       t.string :title
       t.string :body
