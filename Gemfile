@@ -17,8 +17,6 @@ gem 'sqlite3'
 
 gem 'bcrypt-ruby', '3.0.0'
 
-gem 'sqlite3'
-
 gem 'bootstrap-sass'
 
 gem "paperclip"
