@@ -13,8 +13,6 @@ gem 'haml-rails', '>= 0.3.4'
 
 gem 'whenever', :require => false
 
-gem 'sqlite3'
-
 gem 'bcrypt-ruby', '3.0.0'
 
 gem 'bootstrap-sass'
