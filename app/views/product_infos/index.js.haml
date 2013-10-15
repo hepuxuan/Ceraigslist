@@ -1,8 +1,5 @@
 :plain
   $("#products").html('#{escape_javascript(render 'products' )}');
-  $(function() {
-    ajaxPagination();
-  });
   $('.pagination-notice').hide();
   $('body').animate({scrollTop: 0}, 100);
   $('#price_min').val('');
