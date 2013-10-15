@@ -6,4 +6,14 @@
   $('#price_max').val('');
   $('#tag').val('');
   $('#search').val();
+  $('.pagination a').on('click', function() {
+    if ($notice.length > 0) {
+      $notice.show();
+    }
+    else {
+      $('<div class = \'pagination-notice\'>Page is loading...</div>').insertBefore('.index-table');
+    }
+    $.getScript(this.href);
+    return false;
+  });
   
