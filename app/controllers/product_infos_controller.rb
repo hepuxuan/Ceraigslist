@@ -22,9 +22,10 @@ class ProductInfosController < ApplicationController
     end
 
     if params[:tag].present?
-      product_infos_text = (ProductInfo.search conditions: {title_body: params[:tag]}).to_a
-      product_infos_tag = ProductInfo.tagged_with(params[:tag]).where('price <= ? AND price >= ?', price_max, price_min).order(order).to_a
-      @product_infos= (product_infos_tag + product_infos_text).uniq.paginate(:page => params[:page], per_page: per_page)
+      #product_infos_text = (ProductInfo.search conditions: {title_body: params[:tag]}).to_a
+      #product_infos_tag = ProductInfo.tagged_with(params[:tag]).where('price <= ? AND price >= ?', price_max, price_min).order(order).to_a
+      @product_infos = ProductInfo.tagged_with(params[:tag]).where('price <= ? AND price >= ?', price_max, price_min).order(order).to_a.paginate(:page => params[:page], per_page: per_page)
+      #@product_infos = (product_infos_tag + product_infos_text).uniq.paginate(:page => params[:page], per_page: per_page)
     else
       @product_infos = ProductInfo.where('price <= ? AND price >= ?', price_max, price_min).order(order).paginate(:page => params[:page], per_page: per_page)
     end
