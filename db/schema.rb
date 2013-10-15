@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130925165708) do
+ActiveRecord::Schema.define(:version => 20131011275708) do
 
   create_table "assets", :force => true do |t|
     t.integer  "product_info_id"
@@ -29,20 +29,18 @@ ActiveRecord::Schema.define(:version => 20130925165708) do
 
   create_table "product_infos", :force => true do |t|
     t.integer  "user_id"
-    t.integer  "product_id"
     t.datetime "post_date"
-    t.string   "title"
-    t.string   "body"
     t.integer  "price"
-    t.string   "address"
-    t.string   "state"
-    t.string   "city"
     t.integer  "category_id"
     t.integer  "source"
     t.string   "uri"
+    t.integer  "product_id",  :limit => 8
+    t.text     "title"
+    t.text     "body"
+    t.text     "address"
+    t.text     "state"
+    t.text     "city"
   end
-
-  add_index "product_infos", ["product_id"], :name => "index_product_infos_on_product_id"
 
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"
