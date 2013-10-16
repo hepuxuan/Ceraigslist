@@ -29,7 +29,9 @@ task :download_data_from_craglish => :environment do
           product_info.tag_list = (link.css('.l2 .gc').text.split '-').first
           inner_doc = Nokogiri::HTML(open(product_info.uri))
           product_info.body = inner_doc.css('#postingbody').text
-          product_info.address = inner_doc.css('.blurbs li').first.text
+          if inner_doc.css('.blurbs li').first
+            product_info.address = inner_doc.css('.blurbs li').first.text
+          end
           product_info.address.slice!('Location: ')
           product_info.address.slice!('it\'s NOT ok to contact this poster with services or other commercial interests')
           product_info.post_date = DateTime.now
