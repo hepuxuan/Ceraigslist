@@ -10,7 +10,6 @@ $( function() {
       });
 
       $(items.join( '' )).appendTo( '.nav.nav-tabs.nav-stacked' );
-      ajaxPagination();
     });
   });
 });
