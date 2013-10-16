@@ -31,9 +31,10 @@ task :download_data_from_craglish => :environment do
           product_info.body = inner_doc.css('#postingbody').text
           if inner_doc.css('.blurbs li').first
             product_info.address = inner_doc.css('.blurbs li').first.text
+            product_info.address.slice!('Location: ')
+            product_info.address.slice!('it\'s NOT ok to contact this poster with services or other commercial interests')
           end
-          product_info.address.slice!('Location: ')
-          product_info.address.slice!('it\'s NOT ok to contact this poster with services or other commercial interests')
+          
           product_info.post_date = DateTime.now
           inner_doc.css('.postinginfo').each do |post|
             if post.text.include?('Posted:')
