@@ -133,9 +133,7 @@ class ProductInfosController < ApplicationController
   end
 
   def more_tag
-    @more_tags ||=  ProductInfo.tag_counts.order('tags_count DESC').limit(20)[10, 20]
-    respond_to do |format|
-      format.json { render json: @more_tags }
-    end
+    @length = (params[:base]? params[:base] : 0).to_i + 10
+    @tags = ProductInfo.tag_counts.order('tags_count DESC').limit(@length)
   end
 end

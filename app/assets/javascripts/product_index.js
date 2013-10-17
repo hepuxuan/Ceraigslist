@@ -1,5 +1,5 @@
 $(function() {
-  $('.pagination a,').on('click', function() {
+  $('.pagination a').on('click', function() {
     var $notice = $('.pagination-notice');
     if ($notice.length > 0) {
       $notice.show();

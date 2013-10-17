@@ -20,10 +20,7 @@
             .span3
               .sidebar
                 %ul{:class=> 'nav nav-tabs nav-stacked'}
-                  %li= link_to 'All',  product_infos_path
-                  - @tags.each do |tag|
-                    %li= link_to tag.name, product_infos_path(tag: tag.name)
-                  %li= link_to 'More',  more_tag_path, id: 'more_tags'
+                  = render 'layouts/tags', tags: @tags, length: (@length? @length : 10)
             .span9
               %section
                 = render 'layouts/messages'

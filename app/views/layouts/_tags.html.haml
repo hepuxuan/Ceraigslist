@@ -1,0 +1,9 @@
+%li= link_to 'All',  product_infos_path
+- counter = 0
+- tags.each do |tag|
+  - counter += 1
+  - if counter < length
+    %li= link_to tag.name, product_infos_path(tag: tag.name)
+  - elsif tags.size - 1 != counter
+    %li= link_to 'More',  more_tag_path(base: counter), id: 'more_tags'
+    - break
