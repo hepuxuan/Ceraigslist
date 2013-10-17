@@ -1,2 +1,7 @@
 :plain
   $('.sidebar .nav').html('#{escape_javascript(render 'layouts/tags' , tags: @tags, length: @length )}');
+  $('#more_tags').on('click', function(e) {
+    e.preventDefault();
+    $(this).hide();
+    $.getScript(this.href);
+  });
