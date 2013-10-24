@@ -21,8 +21,6 @@ gem "paperclip"
 
 gem "cocaine"
 
-gem 'rmagick'
-
 gem 'aws-sdk'
 
 gem 'carmen-rails', '~> 1.0.0'
@@ -35,9 +33,6 @@ gem 'will_paginate'
 
 gem "jquery-fileupload-rails"
 
-gem 'mysql2'
-
-gem 'thinking-sphinx', '~> 3.0.2'
 
 # Gems used only for assets and not required
 # in production environments by default.

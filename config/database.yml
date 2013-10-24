@@ -3,8 +3,8 @@ development:
   encoding: unicode
   database: myapp_development
   pool: 5
-  username: vagrant
-  password: vagrant
+  username: postgres
+  password: root
 test:
   adapter: postgresql
   encoding: unicode
