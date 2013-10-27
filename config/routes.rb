@@ -2,6 +2,7 @@ CernerForSale::Application.routes.draw do
   root to: 'product_infos#index'
   post 'product_infos/search', to: 'product_infos#search', as: :product_infos_search
   resources :sessions, only: [:create, :new, :destroy]
+  resources :users
   resources :product_infos
   get 'product_infos/tags/more', to: 'product_infos#more_tag', as: :more_tag
 

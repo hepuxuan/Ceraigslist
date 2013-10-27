@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   has_secure_password
 
   before_save{|user| user.email = user.email.downcase} 
-  validates_presence_of :name, :address, :state, :city
+  #validates_presence_of :name, :address, :state, :city
   validates_presence_of :password, :on => :create
   validates_presence_of :password_confirmation, :on => :create
 

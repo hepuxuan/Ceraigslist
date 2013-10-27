@@ -1,14 +1,7 @@
 # coding: UTF-8
 require 'will_paginate/array'
 class ProductInfosController < ApplicationController
-  before_filter :log_in, only: [:new, :create, :edit, :sdestroy]
-
-  def log_in
-    if @current_user.nil?
-      flash[:error] = 'Please log in first'
-      redirect_to new_session_path
-    end
-  end
+  before_filter :log_in, only: [:new, :create, :edit, :destroy]
 
   def index
     price_min = params[:price_min].present? ? params[:price_min] : 0;

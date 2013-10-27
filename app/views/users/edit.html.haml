@@ -1,0 +1,22 @@
+%h1 Edit
+
+= form_for @user do |form|
+  .row
+    .span6
+      = form.label :email, 'Email'
+      = form.text_field :email
+  .row
+    .span6
+      = form.label :name, 'Name'
+      = form.text_field :name
+  .row
+    .span6
+      = label :address, :address1, 'Address Line 1'
+      = text_field :address, :address1, value: @user.address
+      = label :address, :address2, 'Address Line 2'
+      = text_field :address, :address2
+      = form.subregion_select :state, 'US'
+      = form.label :city, 'City'
+      = form.text_field :city
+  = submit_tag 'Save', class: 'btn'
+  = link_to 'Cancel', product_infos_path, class: 'btn'

@@ -9,6 +9,13 @@ class ApplicationController < ActionController::Base
     50
   end
 
+  def log_in
+    if @current_user.nil?
+      flash[:error] = 'Please log in first'
+      redirect_to new_session_path
+    end
+  end
+
   def set_user_and_tags
     @current_user ||= get_user(session)  
     @tags ||=  ProductInfo.tag_counts.order('tags_count DESC').limit(10)

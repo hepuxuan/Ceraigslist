@@ -1,0 +1,13 @@
+%h1 Sign up
+
+= form_for @user do |form|
+  = form.label :email, 'Email'
+  = form.text_field :email
+  %br
+  = form.label :password, 'Password'
+  = form.password_field :password
+  %br
+  = form.label :password_confirmation, 'Password Confirmation'
+  = form.password_field :password_confirmation
+  %br
+  = submit_tag 'Sign in', class: 'btn'
