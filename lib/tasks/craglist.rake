@@ -24,7 +24,6 @@ task :download_data_from_craglish => :environment do
           product_info = ProductInfo.new(title: link.css('.pl a').text, 
             uri: "http://kansascity.craigslist.org#{link.css('a')[0]['href']}", 
             source: ProductInfo::CRAGLIST, product_id: link["data-pid"])
-          puts "id:#{product_info.product_id}"
           product_info.price = link.css('span.price').text.delete('$').to_i
           product_info.tag_list = (link.css('.l2 .gc').text.split '-').first
           inner_doc = Nokogiri::HTML(open(product_info.uri))
@@ -68,7 +67,6 @@ end
 task :clean_product_info_table => :environment do
   ProductInfo.all.each do |product_info|
     if product_info.source == ProductInfo::CRAGLIST && product_info.post_date < 5.days.ago
-      puts "delete #{product_info.product_id}"
       product_info.destroy
     end
   end
