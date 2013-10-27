@@ -67,7 +67,7 @@ end
 
 task :clean_product_info_table => :environment do
   ProductInfo.all.each do |product_info|
-    if product_info.source == ProductInfo::CRAGLIST && product_info.post_date > 2.days.ago
+    if product_info.source == ProductInfo::CRAGLIST && product_info.post_date < 2.days.ago
       puts "delete #{product_info.product_id}"
       product_info.destroy
     end
