@@ -3,15 +3,16 @@
   = content_tag "div", id: "product_info", data: {address: @current_user.address, state: @current_user.state, city: @current_user.city} do
     = form_for @product_info, :html => { multipart: true }, class: 'product_info_form' do |form|
       .row
-        .span3
+        .span6
           = form.label :title, 'Posting Title'
           = form.text_field :title, required: true
+      .row
         .span3
-          = form.label :price, 'Price'
-          = form.number_field :price, required: true
-        .span6
           = form.label :tag_list, "Tags (separated by commas)"
           = form.text_field :tag_list
+        .span3
+          = form.label :price, 'Price'
+          = form.number_field :price, required: true 
       .row
         .span6
           = form.fields_for :assets do |asset|
