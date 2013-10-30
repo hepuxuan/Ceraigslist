@@ -33,6 +33,10 @@ gem 'will_paginate'
 
 gem "jquery-fileupload-rails"
 
+gem 'thinking-sphinx', '3.0.3'
+
+gem 'flying-sphinx',   '1.0.0'
+
 
 # Gems used only for assets and not required
 # in production environments by default.
