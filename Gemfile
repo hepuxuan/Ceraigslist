@@ -33,6 +33,8 @@ gem 'will_paginate'
 
 gem "jquery-fileupload-rails"
 
+gem 'mysql2'
+
 gem 'thinking-sphinx', '3.0.3'
 
 gem 'flying-sphinx',   '1.0.0'
