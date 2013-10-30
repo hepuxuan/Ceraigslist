@@ -1,9 +1,9 @@
-
-= form_for @user do |form|
-  = form.text_field :email, placeholder: 'Your Email'
-  %br
-  = form.password_field :password, placeholder: 'Your Password'
-  %br
-  = form.password_field :password_confirmation, placeholder: 'Confirm Your Email'
-  %br
-  = submit_tag 'Sign Up for Ceraigslist', class: 'btn btn-success'
+#new_user_form
+  = form_for @user do |form|
+    = form.text_field :email, placeholder: 'Your Email'
+    %br
+    = form.password_field :password, placeholder: 'Your Password'
+    %br
+    = form.password_field :password_confirmation, placeholder: 'Confirm Your Email'
+    %br
+    = submit_tag 'Sign Up for Ceraigslist', class: 'btn btn-success'

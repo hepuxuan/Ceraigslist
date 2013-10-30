@@ -21,8 +21,6 @@
               Sign out
     
   - else
-    = form_tag sessions_path, method: :post, class: 'navbar-form pull-right' do
-      = text_field '', 'email', placeholder: 'Email' 
-      = password_field '', 'password', placeholder: 'Password' 
-      = submit_tag 'Sign in', class: 'btn'
-      = link_to 'Sign up', new_user_path, class: 'btn'
+    = link_to 'Sign up', new_user_path, class: 'btn btn-success'
+    = link_to 'Sign in', new_session_path, class: 'btn'
+    
