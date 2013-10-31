@@ -12,7 +12,7 @@ task :download_data_from_craglish => :environment do
   ERRORS = [OpenURI::HTTPError]
   baseuri = 'http://kansascity.craigslist.org/sss/index'
   uris = [].push 'http://kansascity.craigslist.org/sss/'
-  (1..10).to_a.each do |num|
+  (1..5).to_a.each do |num|
     uris.push "#{baseuri}#{(num*100).to_s}.html"
   end
 

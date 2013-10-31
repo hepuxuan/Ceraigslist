@@ -8,3 +8,6 @@
 User.delete_all
 user = User.create(name: 'puxuan he', email: 'puxuan.he@cerner.com', password: '7962787', password_confirmation: '7962787', address: '3810 85th ter aptc', state: 'MO', city: 'Knasas city')
 Asset.delete_all
+ProductInfo.delete_all
+ActsAsTaggableOn::Tag.delete_all
+
