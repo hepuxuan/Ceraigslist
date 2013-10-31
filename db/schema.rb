@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131011275708) do
+ActiveRecord::Schema.define(:version => 20131029275708) do
 
   create_table "assets", :force => true do |t|
     t.integer  "product_info_id"
@@ -30,7 +30,6 @@ ActiveRecord::Schema.define(:version => 20131011275708) do
   create_table "product_infos", :force => true do |t|
     t.integer  "user_id"
     t.datetime "post_date"
-    t.integer  "price"
     t.integer  "category_id"
     t.integer  "source"
     t.string   "uri"
@@ -40,6 +39,7 @@ ActiveRecord::Schema.define(:version => 20131011275708) do
     t.text     "address"
     t.text     "state"
     t.text     "city"
+    t.float    "price"
   end
 
   create_table "taggings", :force => true do |t|
