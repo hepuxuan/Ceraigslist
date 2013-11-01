@@ -8,6 +8,9 @@ class User < ActiveRecord::Base
   #validates_presence_of :name, :address, :state, :city
   validates_presence_of :password, :on => :create
   validates_presence_of :password_confirmation, :on => :create
+  
+  validates :password, :confirmation => true,
+                       :length => {:within => 6..40}
 
   VALID_EMAIL_REGEX = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
   validates:email, presence: true, format:{with: VALID_EMAIL_REGEX}, uniqueness:{case_sensitive:false}
