@@ -39,7 +39,7 @@ gem 'mysql2'
 
 gem 'thinking-sphinx', '3.0.3'
 
-gem 'flying-sphinx',   '0.8.3'
+gem 'flying-sphinx',   '1.0.0'
 
 
 # Gems used only for assets and not required
