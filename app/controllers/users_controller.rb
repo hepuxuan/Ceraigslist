@@ -1,6 +1,6 @@
 # coding: UTF-8
 class UsersController < ApplicationController
-  before_filter :log_in, only: [:create, :edit, :destroy]
+  before_filter :log_in, only: [:edit, :destroy]
   def new
   	@user = User.new
   end
