@@ -1,5 +1,5 @@
 $(function() {
-  $( '#tag' ).autocomplete({
+  $( '#search' ).autocomplete({
     minLength: 2,
     source: function(request, response) {
       $.getJSON( 'product_infos/tags/search.json',{term: request.term}, function( data ) {

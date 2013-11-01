@@ -14,11 +14,13 @@ class ProductInfosController < ApplicationController
       order = 'post_date DESC'
     end
 
-    if params[:search].present?
+    
+    if params[:tag].present? || (ActsAsTaggableOn::Tag.all.include? params[:search])
+      tag = params[:tag]? params[:tag] : params[:search]
+      @product_infos = ProductInfo.tagged_with(tag).where('price <= ? AND price >= ?', price_max, price_min).order(order).to_a.paginate(:page => params[:page], per_page: per_page)
+    elsif params[:search].present?
       @product_infos = ProductInfo.search conditions: {title_body: params[:search]}, with: {price: price_min..price_max},
-        order: order,page: params[:page], per_page: per_page
-    elsif params[:tag].present?
-      @product_infos = ProductInfo.tagged_with(params[:tag]).where('price <= ? AND price >= ?', price_max, price_min).order(order).to_a.paginate(:page => params[:page], per_page: per_page)
+        order: order,page: params[:page], per_page: per_page  
     else
       @product_infos = ProductInfo.where('price <= ? AND price >= ?', price_max, price_min).order(order).paginate(:page => params[:page], per_page: per_page)
     end
