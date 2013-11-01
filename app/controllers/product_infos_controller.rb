@@ -4,8 +4,8 @@ class ProductInfosController < ApplicationController
   before_filter :log_in, only: [:new, :create, :edit, :destroy]
 
   def index
-    price_min = params[:price_min].present? ? params[:price_min] : 0;
-    price_max = params[:price_max].present? ? params[:price_max] : 1000000000;
+    price_min = params[:price_min].present? ? params[:price_min] : 0.0;
+    price_max = params[:price_max].present? ? params[:price_max] : 1000000000.0;
     if params[:sort] == 'price low to high'
       order = 'price ASC'
     elsif params[:sort] == 'price high to low'
@@ -14,10 +14,11 @@ class ProductInfosController < ApplicationController
       order = 'post_date DESC'
     end
 
-    if params[:tag].present?
-      #@product_infos = ProductInfo.tagged_with(params[:tag]).where('price <= ? AND price >= ?', price_max, price_min).order(order).to_a.paginate(:page => params[:page], per_page: per_page)
+    if params[:search].present?
       @product_infos = (ProductInfo.search conditions: {title_body: params[:tag]}, with: {price: price_min..price_max},
         order: order).paginate(:page => params[:page], per_page: per_page)
+    elsif params[:tag].present?
+      @product_infos = ProductInfo.tagged_with(params[:tag]).where('price <= ? AND price >= ?', price_max, price_min).order(order).to_a.paginate(:page => params[:page], per_page: per_page)
     else
       @product_infos = ProductInfo.where('price <= ? AND price >= ?', price_max, price_min).order(order).paginate(:page => params[:page], per_page: per_page)
     end
