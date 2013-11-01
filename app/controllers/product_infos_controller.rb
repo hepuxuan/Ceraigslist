@@ -4,8 +4,8 @@ class ProductInfosController < ApplicationController
   before_filter :log_in, only: [:new, :create, :edit, :destroy]
 
   def index
-    price_min = params[:price_min].present? ? params[:price_min] : 0.0;
-    price_max = params[:price_max].present? ? params[:price_max] : 1000000000.0;
+    price_min = (params[:price_min].present? ? params[:price_min] : 0).to_f;
+    price_max = (params[:price_max].present? ? params[:price_max] : 1000000000).to_f;
     if params[:sort] == 'price low to high'
       order = 'price ASC'
     elsif params[:sort] == 'price high to low'
