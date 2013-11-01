@@ -25,6 +25,8 @@ gem 'aws-sdk'
 
 gem 'carmen-rails', '~> 1.0.0'
 
+gem 'openssl-nonblock', '0.2.1'
+
 gem 'acts-as-taggable-on'
 
 gem 'nokogiri'
@@ -37,7 +39,7 @@ gem 'mysql2'
 
 gem 'thinking-sphinx', '3.0.3'
 
-gem 'flying-sphinx',   '1.0.0'
+gem 'flying-sphinx',   '0.8.3'
 
 
 # Gems used only for assets and not required
