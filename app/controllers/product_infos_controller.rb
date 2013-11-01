@@ -5,7 +5,7 @@ class ProductInfosController < ApplicationController
 
   def index
     price_min = params[:price_min].present? ? params[:price_min] : 0;
-    price_max = params[:price_max].present? ? params[:price_max] : 1e9;
+    price_max = params[:price_max].present? ? params[:price_max] : 1000000000;
     if params[:sort] == 'price low to high'
       order = 'price ASC'
     elsif params[:sort] == 'price high to low'
