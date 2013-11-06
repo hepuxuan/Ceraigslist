@@ -19,7 +19,7 @@
       = form.label :city, 'City'
       = form.text_field :city
       = label :user, :password, 'Password'
-      = link_to 'change password', edit_password_user_path
+      = link_to 'change password', edit_password_user_path(@user.id)
   %br
   = submit_tag 'Save', class: 'btn btn-primary'
   = link_to 'Cancel', product_infos_path, class: 'btn'

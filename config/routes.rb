@@ -4,8 +4,8 @@ CernerForSale::Application.routes.draw do
   resources :sessions, only: [:create, :new, :destroy]
   resources :users
   get 'user/forgot_password', to: 'users#forgot_password', as: :forgot_password_user
-  get 'user/edit_password', to: 'users#edit_password', as: :edit_password_user
-  post 'user/update_password', to: 'users#update_password', as: :update_password_user
+  get 'users/:id/edit_password', to: 'users#edit_password', as: :edit_password_user
+  post 'users/:id/update_password', to: 'users#update_password', as: :update_password_user
   post 'user/email_password', to: 'users#email_password', as: :email_password_user
   resources :product_infos
   get 'product_infos/tags/more', to: 'product_infos#more_tag', as: :more_tag
