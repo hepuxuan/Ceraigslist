@@ -3,6 +3,8 @@ CernerForSale::Application.routes.draw do
   post 'product_infos/search', to: 'product_infos#search', as: :product_infos_search
   resources :sessions, only: [:create, :new, :destroy]
   resources :users
+  get 'user/forgot_password', to: 'users#forgot_password', as: :forgot_password_user
+  post 'user/email_password', to: 'users#email_password', as: :email_password_user
   resources :product_infos
   get 'product_infos/tags/more', to: 'product_infos#more_tag', as: :more_tag
 
