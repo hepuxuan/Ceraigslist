@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: 'puxuanhe@gmail.com'
+  default from: 'noreply@pacific-hamlet-3033.herokuapp.com'
  
   def password_email(user, new_password)
     @user = user
