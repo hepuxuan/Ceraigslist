@@ -55,7 +55,7 @@ class UsersController < ApplicationController
         redirect_to edit_user_path @current_user.id
       else
         flash[:error] = ''
-        @user.errors.full_messages.each do |error|
+        @current_user.errors.full_messages.each do |error|
           flash[:error] += "#{error}" 
         end
         render :edit_password
