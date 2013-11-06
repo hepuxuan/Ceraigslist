@@ -1,6 +1,6 @@
 # coding: UTF-8
 class UsersController < ApplicationController
-  before_filter :log_in, only: [:edit, :destroy]
+  before_filter :log_in, only: [:edit, :destroy, :edit_password]
   def new
   	@user = User.new
   end
@@ -42,6 +42,28 @@ class UsersController < ApplicationController
   end
 
   def forgot_password
+  end
+
+  def edit_password
+  end
+
+  def update_password
+    if @current_user.authenticate params[:user][:old_password]
+      params[:user].delete :old_password
+      if @current_user.update_attributes params[:user]
+        flash[:notice] = 'successfully update password'
+        redirect_to edit_user_path @current_user.id
+      else
+        flash[:error] = ''
+        @user.errors.full_messages.each do |error|
+          flash[:error] += "#{error}" 
+        end
+        render :edit_password
+      end
+    else
+      flash[:error] = 'your old password is incorrect'
+      render :edit_password
+    end
   end
 
   def email_password

@@ -1,5 +1,5 @@
-#new_user_form
-  = form_for @user do |form|
+.user_form
+  = form_for @user, class: 'user_form' do |form|
     = form.text_field :email, placeholder: 'Your Email', required: true
     %br
     = form.password_field :password, placeholder: 'Your Password', required: true

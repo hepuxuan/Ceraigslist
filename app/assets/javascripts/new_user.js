@@ -4,10 +4,10 @@ function validateEmail(email) {
 } 
 
 $( function() {
-  $('#new_user_form .btn').on('click', function() {
+  $('.user_form .btn').on('click', function() {
     if(!validateEmail($('#user_email').val()) || $('#user_password_confirmation').val().length < 6 || $('#user_password').val().length < 6 || 
       $('#user_password').val() !== $('#user_password_confirmation').val()) {
-      $('<div class="alert alert-error">sorry but you have invalid input</div>').insertBefore('#new_user_form');
+      $('<div class="alert alert-error">sorry but you have invalid input</div>').insertBefore('.user_form');
       return false;
     }
   });
