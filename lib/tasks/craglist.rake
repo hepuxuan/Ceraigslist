@@ -12,7 +12,7 @@ task :download_data_from_craglish => :environment do
   ERRORS = [OpenURI::HTTPError]
   baseuri = 'http://kansascity.craigslist.org/sss/index'
   uris = [].push 'http://kansascity.craigslist.org/sss/'
-  (1..5).to_a.each do |num|
+  (1..50).to_a.each do |num|
     uris.push "#{baseuri}#{(num*100).to_s}.html"
   end
 
@@ -24,7 +24,9 @@ task :download_data_from_craglish => :environment do
           product_info = ProductInfo.new(title: link.css('.pl a').text, 
             uri: "http://kansascity.craigslist.org#{link.css('a')[0]['href']}", 
             source: ProductInfo::CRAGLIST, product_id: link["data-pid"])
-          product_info.price = link.css('span.price').text.delete('$').to_i
+          price_text = link.css('span.price')[0]
+          product_info.price = price_text ? price_text.text.delete('$').to_i : 0
+          puts product_info.price
           product_info.tag_list = (link.css('.l2 .gc').text.split '-').first
           inner_doc = Nokogiri::HTML(open(product_info.uri))
           product_info.body = inner_doc.css('#postingbody').text
@@ -39,6 +41,9 @@ task :download_data_from_craglish => :environment do
             if post.text.include?('Posted:')
               product_info.post_date = DateTime.parse(post.css('date').text)
             end
+          end
+          if product_info.post_date < 30.days.ago
+            break
           end
           if product_info.save
             if inner_doc.css('#thumbs')
@@ -70,4 +75,8 @@ task :clean_product_info_table => :environment do
       product_info.destroy
     end
   end
+end
+
+task :drop_product_info_table => :environment do
+  ProductInfo.delete_all
 end
