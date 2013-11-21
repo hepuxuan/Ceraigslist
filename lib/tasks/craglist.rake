@@ -35,6 +35,8 @@ task :download_data_from_craglish => :environment do
             address.slice!('it\'s NOT ok to contact this poster with services or other commercial interests')
             if address.present?
               product_info.address = address
+            else
+              product_info.address = 'Kansas City, MO'
             end
           end
           
