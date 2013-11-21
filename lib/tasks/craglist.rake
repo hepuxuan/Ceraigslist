@@ -26,14 +26,16 @@ task :download_data_from_craglish => :environment do
             source: ProductInfo::CRAGLIST, product_id: link["data-pid"])
           price_text = link.css('span.price')[0]
           product_info.price = price_text ? price_text.text.delete('$').to_i : 0
-          puts product_info.price
           product_info.tag_list = (link.css('.l2 .gc').text.split '-').first
           inner_doc = Nokogiri::HTML(open(product_info.uri))
           product_info.body = inner_doc.css('#postingbody').text
           if inner_doc.css('.blurbs li').first
-            product_info.address = inner_doc.css('.blurbs li').first.text
-            product_info.address.slice!('Location: ')
-            product_info.address.slice!('it\'s NOT ok to contact this poster with services or other commercial interests')
+            address = inner_doc.css('.blurbs li').first.text
+            address.slice!('Location: ')
+            address.slice!('it\'s NOT ok to contact this poster with services or other commercial interests')
+            if address.present?
+              product_info.address = address
+            end
           end
           
           product_info.post_date = DateTime.now
