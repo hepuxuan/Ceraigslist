@@ -42,8 +42,10 @@ task :download_data_from_craglish => :environment do
           
           product_info.post_date = DateTime.now
           inner_doc.css('.postinginfo').each do |post|
-            if post.text.include?('Posted:')
-              product_info.post_date = DateTime.parse(post.css('date').text)
+            post_text = post.text
+            if post_text.include?('Posted:')
+              post_text.slice!('Posted:')
+              product_info.post_date = DateTime.parse(post_text)
             end
           end
           if product_info.post_date < 30.days.ago
