@@ -20,7 +20,7 @@ class ProductInfosController < ApplicationController
       else
         if params[:distance].present?
           distance = params[:distance].to_f * MILE_TO_M
-          @product_infos = ProductInfo.search conditions: {title_body: params[:search]}, :geo => [@lat, @lng], with: {geodist: 0.0..distance},
+          @product_infos = ProductInfo.search conditions: {title_body: params[:search], geo: [@lat, @lng]}, with: {geodist: 0.0..distance, price: price_min..price_max},
             order: order, page: params[:page], per_page: per_page
         else
           @product_infos = ProductInfo.search conditions: {title_body: params[:search]}, with: {price: price_min..price_max},
