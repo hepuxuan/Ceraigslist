@@ -8,14 +8,13 @@ class User < ActiveRecord::Base
   validates :password, length: {minimum: 6, maximum: 120}, on: :update, allow_blank: true
 
   VALID_EMAIL_REGEX = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
-  validates: email, presence: true, format:{with: VALID_EMAIL_REGEX}, uniqueness:{case_sensitive:false}
+  validates:email, presence: true, format:{with: VALID_EMAIL_REGEX}, uniqueness:{case_sensitive:false}
   RATE = 0.0174532925
-
   before_save do |user|
   	user.email = user.email.downcase
   	if user.address.present?
       begin
-        geo_loc = Geokit::Geocoders::GeonamesGeocoder.geocode(user.address + ', ' + user.city + ', ' + user.state)
+        geo_loc = Geokit::Geocoders::GeonamesGeocoder.geocode(user.address + ', ' +user.city + ', ' + user.state)
         user.latitude = geo_loc.lat * RATE
         user.longitude = geo_loc.lng * RATE
       rescue
