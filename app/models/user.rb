@@ -14,9 +14,12 @@ class User < ActiveRecord::Base
   before_save do |user|
   	user.email = user.email.downcase
   	if user.address.present?
-      geo_loc = Geokit::Geocoders::GeonamesGeocoder.geocode(user.address + ', ' + user.city + ', ' + user.state)
-      user.latitude = geo_loc.lat * RATE
-      user.longitude = geo_loc.lng * RATE
+      begin
+        geo_loc = Geokit::Geocoders::GeonamesGeocoder.geocode(user.address + ', ' + user.city + ', ' + user.state)
+        user.latitude = geo_loc.lat * RATE
+        user.longitude = geo_loc.lng * RATE
+      rescue
+      end
     end
   end
 end
