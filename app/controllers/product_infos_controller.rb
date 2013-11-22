@@ -2,7 +2,7 @@
 require 'will_paginate/array'
 class ProductInfosController < ApplicationController
   before_filter :log_in, only: [:new, :create, :edit, :destroy]
-
+  MILE_TO_M = 1609.344
   def index
     price_min = (params[:price_min].present? ? params[:price_min] : 0).to_f;
     price_max = (params[:price_max].present? ? params[:price_max] : 1000000000).to_f;
@@ -14,11 +14,11 @@ class ProductInfosController < ApplicationController
       order = 'post_date DESC'
     end
 
-    if params[:search].present?
+    if params[:search].present? || params[:distance].present?
       if ActsAsTaggableOn::Tag.all.any? { |tag| tag.to_s == params[:search] }
         @product_infos = ProductInfo.tagged_with(params[:search]).where('price <= ? AND price >= ?', price_max, price_min).order(order).paginate(:page => params[:page], per_page: per_page)
       else
-        @product_infos = ProductInfo.search conditions: {title_body: params[:search]}, with: {price: price_min..price_max},
+        @product_infos = ProductInfo.search conditions: {title_body: params[:search]}, :geo => [@lat, @lng], with: {geodist: 0.0..(params[:distance]*MILE_TO_M), price: price_min..price_max},
           order: order, page: params[:page], per_page: per_page
       end
     elsif params[:tag].present?
