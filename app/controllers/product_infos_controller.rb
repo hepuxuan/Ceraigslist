@@ -3,6 +3,7 @@ require 'will_paginate/array'
 class ProductInfosController < ApplicationController
   before_filter :log_in, only: [:new, :create, :edit, :destroy]
   MILE_TO_M = 1609.344
+  RATE = 0.0174532925
   def index
     price_min = (params[:price_min].present? ? params[:price_min] : 0).to_f;
     price_max = (params[:price_max].present? ? params[:price_max] : 1000000000).to_f;
@@ -15,10 +16,9 @@ class ProductInfosController < ApplicationController
     end
 
     if params[:search].present? || params[:distance].present?
-      if params[:distance].present?
+      if params[:distance].present? && @current_user && @current_user.latitude && @current_user.longitude
         distance = params[:distance].to_f * MILE_TO_M
-        @product_infos = ProductInfo.search "pancakes", :geo => [53.348962, 83.777988],
-  :with => {:geodist => 0.0..10_000.0}
+        @product_infos = ProductInfo.search params[:search], :geo => [@current_user.latitude * RATE, @current_user.longitude * RATE], :with => {:geodist => 0.0..10_000.0, price: price_min..price_max}
       else
         @product_infos = ProductInfo.search conditions: {title_body: params[:search]}, with: {price: price_min..price_max},
           order: order, page: params[:page], per_page: per_page
