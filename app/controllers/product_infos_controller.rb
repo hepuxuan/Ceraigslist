@@ -17,7 +17,7 @@ class ProductInfosController < ApplicationController
     if params[:search].present? || params[:distance].present?
       if params[:distance].present?
         distance = params[:distance].to_f * MILE_TO_M
-        @product_infos = ProductInfo.search "pancakes", :geo => [@lat, @lng],
+        @product_infos = ProductInfo.search "pancakes", :geo => [53.348962, 83.777988],
   :with => {:geodist => 0.0..10_000.0}
       else
         @product_infos = ProductInfo.search conditions: {title_body: params[:search]}, with: {price: price_min..price_max},
