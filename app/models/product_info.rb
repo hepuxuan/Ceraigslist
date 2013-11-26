@@ -12,8 +12,10 @@ class ProductInfo < ActiveRecord::Base
   before_save do |product_info|
   	if product_info.address.present?
       geo_loc = Geokit::Geocoders::GeonamesGeocoder.geocode product_info.address
-      product_info.latitude = geo_loc.lat * RATE
-      product_info.longitude = geo_loc.lng * RATE
+      if geo_loc.lat && geo_loc.lng
+        product_info.latitude = geo_loc.lat * RATE
+        product_info.longitude = geo_loc.lng * RATE
+      end
     end
   end
 end
