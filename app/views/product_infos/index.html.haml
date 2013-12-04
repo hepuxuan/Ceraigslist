@@ -4,7 +4,8 @@
       = number_field_tag :price_min, nil, placeholder: 'Price Min', class: 'input-small'
       = number_field_tag :price_max, nil, placeholder: 'Price Max', class: 'input-small'
       = text_field_tag :search, nil, placeholder: 'Search'
-      = number_field_tag :distance, nil, placeholder: 'distance(mile)', class: 'input-medium'
+      - if @current_user
+        = number_field_tag :distance, nil, placeholder: 'distance(mile)', class: 'input-medium'
       = select_tag(:sort, options_for_select(['price low to high', 'price high to low', 'post date']), class: 'input-medium')
       = submit_tag 'GO!', class: 'btn'
 = render partial: 'products'
