@@ -90,7 +90,7 @@ task :send_email_alert => :environment do
           product_infos.push product_info
         end
       else
-        new_product_infos = ProductInfo.search email_alert.search, :with => {price: price_min..price_max}
+        new_product_infos = ProductInfo.search email_alert.search, :with => {price: price_min..price_max, processed: false}
         new_product_infos.each do |product_info|
           product_infos.push product_info
         end
