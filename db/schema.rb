@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131109275708) do
+ActiveRecord::Schema.define(:version => 20140114215225) do
 
   create_table "assets", :force => true do |t|
     t.integer  "product_info_id"
@@ -25,6 +25,16 @@ ActiveRecord::Schema.define(:version => 20131109275708) do
 
   create_table "category", :force => true do |t|
     t.string "name"
+  end
+
+  create_table "email_alerts", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "price_min"
+    t.integer  "price_max"
+    t.string   "search"
+    t.integer  "distance"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "product_infos", :force => true do |t|
@@ -42,7 +52,10 @@ ActiveRecord::Schema.define(:version => 20131109275708) do
     t.float    "price"
     t.float    "longitude"
     t.float    "latitude"
+    t.boolean  "processed"
   end
+
+  add_index "product_infos", ["processed"], :name => "index_product_infos_on_processed"
 
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"

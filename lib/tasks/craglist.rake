@@ -23,7 +23,7 @@ task :download_data_from_craglish => :environment do
         if ProductInfo.where(product_id: link["data-pid"].to_i).empty?
           product_info = ProductInfo.new(title: link.css('.pl a').text, 
             uri: "http://kansascity.craigslist.org#{link.css('a')[0]['href']}", 
-            source: ProductInfo::CRAGLIST, product_id: link["data-pid"])
+            source: ProductInfo::CRAGLIST, product_id: link["data-pid"], processed: false)
           price_text = link.css('span.price')[0]
           product_info.price = price_text ? price_text.text.delete('$').to_i : 0
           product_info.tag_list = (link.css('.l2 .gc').text.split '-').first
@@ -72,6 +72,27 @@ task :download_data_from_craglish => :environment do
   rescue *ERRORS => e
     puts e.to_s
     puts 'Http failure'
+  end
+end
+
+task :send_email_alert => :environment do
+  MILE_TO_M = 1609.344
+  RATE = 0.0174532925
+  User.all.each do |user|
+    product_infos = []
+    user.email_alerts.each do |email_alert|
+      price_min = (email_alert.price_min ? email_alert.price_min : 0).to_f;
+      price_max = (pemail_alert.price_max ? pemail_alert.price_max : 1000000000).to_f;
+      if user.distance
+        distance = user.distance.to_f * MILE_TO_M
+        product_infos += ProductInfo.search email_alert.search, :geo => [user.latitude * RATE, user.longitude * RATE], :with => {:geodist => 0.0..distance, price: price_min..price_max, processed: false}
+      else
+        product_infos += ProductInfo.search email_alert.search, :with => {price: price_min..price_max, processed: false}
+      end
+    end
+    if !product_infos.empty?
+      UserMailer.alert_email(user, product_infos).deliver
+    end
   end
 end
 

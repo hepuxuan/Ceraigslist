@@ -6,4 +6,11 @@ class UserMailer < ActionMailer::Base
     @new_password = new_password
     mail(to: @user.email, subject: 'New Password From Ceraigslist')
   end
+
+  def alert_email(user, product_infos)
+  	@user = user
+  	@product_infos = product_infos
+    puts "#{user.email}"
+  	mail(to: user.email, subject: 'We found something for you')
+  end
 end

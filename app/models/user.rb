@@ -1,8 +1,10 @@
 # coding: UTF-8
 class User < ActiveRecord::Base
-  attr_accessible :name, :email,:password, :password_confirmation, :address, :state, :city, :longitude, :latitude
+  attr_accessible :name, :email,:password, :password_confirmation, :address, :state, :city, :longitude, :latitude, :email_alerts
   has_many :product_info
+  has_many :email_alerts
   has_secure_password
+  accepts_nested_attributes_for :email_alerts
   #validates_presence_of :name, :address, :state, :city
   validates :password, presence: true, length: {minimum: 6, maximum: 120}, on: :create
   validates :password, length: {minimum: 6, maximum: 120}, on: :update, allow_blank: true
