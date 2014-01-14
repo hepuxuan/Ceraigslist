@@ -87,7 +87,7 @@ task :send_email_alert => :environment do
         distance = email_alert.distance.to_f * MILE_TO_M
         product_infos += ProductInfo.search email_alert.search, :geo => [user.latitude * RATE, user.longitude * RATE], :with => {:geodist => 0.0..distance, price: price_min..price_max, processed: false}
       else
-        product_infos += ProductInfo.search email_alert.search, :with => {price: price_min..price_max, processed: false}
+        product_infos += ProductInfo.search email_alert.search, :with => {price: price_min..price_max}
       end
     end
     if !product_infos.empty?
