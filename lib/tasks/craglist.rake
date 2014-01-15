@@ -105,6 +105,12 @@ task :send_email_alert => :environment do
   end
 end
 
+task :mark_processed_true => :environment do
+  ProductInfo.All.each do |product_info|
+    product_info.update_attributes(processed: true)
+  end
+end
+
 task :clean_product_info_table => :environment do
   ProductInfo.all.each do |product_info|
     if product_info.source == ProductInfo::CRAGLIST && product_info.post_date < 5.days.ago
