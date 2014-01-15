@@ -106,7 +106,7 @@ task :send_email_alert => :environment do
 end
 
 task :mark_processed_true => :environment do
-  ProductInfo.All.each do |product_info|
+  ProductInfo.all.each do |product_info|
     product_info.update_attributes(processed: true)
   end
 end
