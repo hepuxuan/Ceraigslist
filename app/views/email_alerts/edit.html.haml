@@ -1,0 +1,12 @@
+%h2 edit email alert
+= form_for @email_alert do |form|
+  = form.label :price_min, 'Price Min'
+  = form.text_field :price_min, class: 'input-medium'
+  = form.label :price_max, 'Price Max'
+  = form.text_field :price_max, class: 'input-medium'
+  = form.label :search, 'Search'
+  = form.text_field :search, class: 'input-medium'
+  = form.label :distance, 'Distance'
+  = form.text_field :distance, class: 'input-medium'
+  %br
+  = form.submit 'Save', class: 'btn btn-primary save-btn'

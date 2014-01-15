@@ -1,0 +1,19 @@
+%h2 Your Current Email Alert
+- if @email_alerts 
+  %table{class: 'table table-striped index-table'}
+    %thead
+      %tr
+        %th Keyword
+        %th Price Min
+        %th Price Max
+        %th Distance
+        %th Edit
+      %tbody
+        - @email_alerts.each do |email_alert|
+          %tr
+            %td= email_alert.search
+            %td= email_alert.price_min
+            %td= email_alert.price_max
+            %td= email_alert.distance
+            %td= link_to 'Edit', edit_email_alert_path(email_alert.id), class: 'btn'
+= link_to  'add new email alert', new_email_alert_path, class: 'btn-success btn'
