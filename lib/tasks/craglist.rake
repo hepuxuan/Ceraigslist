@@ -84,13 +84,13 @@ task :send_email_alert => :environment do
       price_min = (email_alert.price_min ? email_alert.price_min : 0).to_f;
       price_max = (email_alert.price_max ? email_alert.price_max : 1000000000).to_f;
       if email_alert.distance
-        #distance = user.distance.to_f * MILE_TO_M
-        #new_product_infos = ProductInfo.search email_alert.search, :geo => [user.latitude * RATE, user.longitude * RATE], :with => {:geodist => 0.0..distance, price: price_min..price_max, processed: false}
-        #new_product_infos.each do |product_info|
-          #product_infos.push product_info
-        #end
+        distance = user.distance.to_f * MILE_TO_M
+        new_product_infos = ProductInfo.search email_alert.search, :geo => [user.latitude * RATE, user.longitude * RATE], :with => {:geodist => 0.0..distance, price: price_min..price_max, processed: false}
+        new_product_infos.each do |product_info|
+          product_infos.push product_info
+        end
       else
-        new_product_infos = []
+        new_product_infos = [ProductInfo.search email_alert.search, :with => {price: price_min..price_max}]
         new_product_infos.each do |product_info|
           product_info.processed = true
           product_info.save
