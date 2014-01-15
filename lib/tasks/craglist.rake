@@ -100,6 +100,9 @@ task :send_email_alert => :environment do
       UserMailer.alert_email(user, product_infos).deliver
     end
   end
+  ProductInfo.where(processed: false).each do |product_info|
+    product_info.update_attributes(processed: true)
+  end
 end
 
 task :clean_product_info_table => :environment do
