@@ -21,12 +21,12 @@ task :download_data_from_craglish => :environment do
   begin
     citys.each do |city|
       uris.each do |baseuri|
-        uri = 'http://' + city + baseuri
+        uri = 'http://' + city.gsub(/\s+/, '') + baseuri
         doc = Nokogiri::HTML(open(uri))
         doc.css('p.row').each do |link|
           if ProductInfo.where(product_id: link["data-pid"].to_i).empty?
             product_info = ProductInfo.new(title: link.css('.pl a').text, 
-              uri: "http://" + city + ".craigslist.org#{link.css('a')[0]['href']}", city: city,
+              uri: "http://" + city.gsub(/\s+/, '') + ".craigslist.org#{link.css('a')[0]['href']}", city: city,
               source: ProductInfo::CRAGLIST, product_id: link["data-pid"], processed: false)
 
             price_text = link.css('span.price')[0]
@@ -79,10 +79,10 @@ task :download_data_from_craglish => :environment do
           end
         end
       end
-    rescue *ERRORS => e
-      puts e.to_s
-      puts 'Http failure'
     end
+  rescue *ERRORS => e
+    puts e.to_s
+    puts 'Http failure'
   end
 end
 
