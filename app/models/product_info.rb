@@ -11,10 +11,14 @@ class ProductInfo < ActiveRecord::Base
   CRAGLIST = 1
   before_save do |product_info|
   	if product_info.address.present?
-      geo_loc = Geokit::Geocoders::GeonamesGeocoder.geocode product_info.address
-      if geo_loc.lat && geo_loc.lng
-        product_info.latitude = geo_loc.lat * RATE
-        product_info.longitude = geo_loc.lng * RATE
+      begin
+        geo_loc = Geokit::Geocoders::GeonamesGeocoder.geocode product_info.address
+        if geo_loc.lat && geo_loc.lng
+          product_info.latitude = geo_loc.lat * RATE
+          product_info.longitude = geo_loc.lng * RATE
+        end
+      rescue
+        puts 'gis error'
       end
     end
   end
