@@ -10,6 +10,7 @@ require 'open-uri'
 task :download_data_from_craglish => :environment do
   puts 'get data form kasascity craglist'
   ERRORS = [OpenURI::HTTPError]
+  citys = ['kansas city', 'iowa city']
   baseuri = 'http://kansascity.craigslist.org/sss/index'
   uris = [].push 'http://kansascity.craigslist.org/sss/'
   (1..50).to_a.each do |num|
@@ -20,14 +21,19 @@ task :download_data_from_craglish => :environment do
     uris.each do |uri|
       doc = Nokogiri::HTML(open(uri))
       doc.css('p.row').each do |link|
+        puts 'success1!!!!!!'
         if ProductInfo.where(product_id: link["data-pid"].to_i).empty?
+          puts 'success2!!!!!!'
           product_info = ProductInfo.new(title: link.css('.pl a').text, 
             uri: "http://kansascity.craigslist.org#{link.css('a')[0]['href']}", 
             source: ProductInfo::CRAGLIST, product_id: link["data-pid"], processed: false)
+
           price_text = link.css('span.price')[0]
+
           product_info.price = price_text ? price_text.text.delete('$').to_i : 0
           product_info.tag_list = (link.css('.l2 .gc').text.split '-').first
           inner_doc = Nokogiri::HTML(open(product_info.uri))
+
           product_info.body = inner_doc.css('#postingbody').text
           if inner_doc.css('.blurbs li').first
             address = inner_doc.css('.blurbs li').first.text
@@ -51,10 +57,18 @@ task :download_data_from_craglish => :environment do
           if product_info.post_date < 30.days.ago
             break
           end
+          puts product_info.price.to_s
+          puts product_info.tag_list.to_s
+          puts product_info.body.to_s
+          puts product_info.address.to_s
+          puts product_info.post_date.to_s
+
           if product_info.save
+
             if inner_doc.css('#thumbs')
               inner_doc.css('#thumbs a').each do |thumb|
                 asset = Asset.new
+
                 asset.product_info_id = product_info.id
                 asset.crag_uri = thumb['href']
                 asset.crag_thumb_uri = thumb.css('img')[0]['src']
@@ -63,6 +77,7 @@ task :download_data_from_craglish => :environment do
                 end
               end
             end
+
           else
             product_info.errors.full_messages.each {|e| puts e}
           end
@@ -107,7 +122,8 @@ end
 
 task :mark_processed_true => :environment do
   ProductInfo.all.each do |product_info|
-    product_info.update_attributes(processed: true)
+    product_info.processed = true
+    product_info.save
   end
 end
 
