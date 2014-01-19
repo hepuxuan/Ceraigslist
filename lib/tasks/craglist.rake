@@ -7,7 +7,7 @@ task :download_data_from_craglish => :environment do
   baseuri = '.craigslist.org/sss/'
   #uri = 'http://' + city + baseuri
   uris = [].push baseuri
-  (1..50).to_a.each do |num|
+  (1..2).to_a.each do |num|
     uris.push "#{baseuri}index#{(num*100).to_s}.html"
   end
 
@@ -69,6 +69,9 @@ task :download_data_from_craglish => :environment do
                   asset = Asset.new
                   asset.product_info_id = product_info.id
                   asset.crag_uri = thumb['href']
+                  unless asset.save
+                    asset.errors.full_messages.each {|e| puts e}
+                  end
                 end
               end
 
