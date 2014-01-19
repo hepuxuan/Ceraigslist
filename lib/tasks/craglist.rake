@@ -1,11 +1,4 @@
 # coding: UTF-8
-# lib/tasks/populate.rake
-#
-# Rake task to populate development database with test data
-# Run it with "bundle exec rake db:populate"
-# See Railscast 126 and the faker website for more information
-# and credited to http://www.jacoulter.com/2011/12/21/rails-using-faker-to-populate-a-development-database/
-require 'nokogiri'
 require 'open-uri'
 task :download_data_from_craglish => :environment do
   puts 'get data form kasascity craglist'
@@ -70,6 +63,12 @@ task :download_data_from_craglish => :environment do
                   unless asset.save
                     asset.errors.full_messages.each {|e| puts e}
                   end
+                end
+              else
+                if inner_doc.css('#ci')
+                  asset = Asset.new
+                  asset.product_info_id = product_info.id
+                  asset.crag_uri = thumb['href']
                 end
               end
 

@@ -21,7 +21,8 @@
         = image_tag assets.first.crag_uri, id: 'product_img'
         %br
         - @product_info.assets.each do |asset|
-          = link_to image_tag(asset.crag_thumb_uri), asset.crag_uri, class: 'product_img_link'
+          - if asset.crag_thumb_uri
+            = link_to image_tag(asset.crag_thumb_uri), asset.crag_uri, class: 'product_img_link'
       - elsif @product_info.source == ProductInfo::LOCAL
         = image_tag assets.first.image.url, id: 'product_img'
         %br
