@@ -3,23 +3,22 @@ require 'open-uri'
 task :download_data_from_craglish => :environment do
   puts 'get data form kasascity craglist'
   ERRORS = [OpenURI::HTTPError]
-  citys = ['kansas city', 'iowa city']
+  citys = [{state: 'Missouri', city: 'kansas city'}, {state: 'Iowa', city: 'iowa city'}]
   baseuri = '.craigslist.org/sss/'
-  #uri = 'http://' + city + baseuri
   uris = [].push baseuri
-  (1..50).to_a.each do |num|
+  (1..20).to_a.each do |num|
     uris.push "#{baseuri}index#{(num*100).to_s}.html"
   end
 
   begin
     citys.each do |city|
       uris.each do |baseuri|
-        uri = 'http://' + city.gsub(/\s+/, '') + baseuri
+        uri = 'http://' + city[:city].gsub(/\s+/, '') + baseuri
         doc = Nokogiri::HTML(open(uri))
         doc.css('p.row').each do |link|
           if ProductInfo.where(product_id: link["data-pid"].to_i).empty?
             product_info = ProductInfo.new(title: link.css('.pl a').text, 
-              uri: "http://" + city.gsub(/\s+/, '') + ".craigslist.org#{link.css('a')[0]['href']}", city: city,
+              uri: "http://" + city[:city].gsub(/\s+/, '') + ".craigslist.org#{link.css('a')[0]['href']}", city: city[:city], state: city[:state], 
               source: ProductInfo::CRAGLIST, product_id: link["data-pid"], processed: false)
 
             price_text = link.css('span.price')[0]
@@ -36,7 +35,7 @@ task :download_data_from_craglish => :environment do
               if address.present?
                 product_info.address = address
               else
-                product_info.address = city
+                product_info.address = city[:city] + ' ' + city[:state]
               end
             end
             
