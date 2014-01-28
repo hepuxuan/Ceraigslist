@@ -15,6 +15,23 @@ class EmailAlertsController < ApplicationController
     end
   end
 
+  def destroy
+    begin
+      @email_alert = EmailAlert.find(params[:id])
+      if @email_alert.user_id == @current_user.id
+        @email_alert.destroy
+        flash[:notice] = 'Your email alert have been removed'
+        redirect_to email_alerts_path
+      else
+       flash[:error] = 'permission denied'
+       render :show
+      end
+    rescue ActiveRecord::RecordNotFound
+      flash[:notice] = 'Can not find this email alert'
+      redirect_to email_alerts_path
+    end
+  end
+
   def update
     @email_alert = EmailAlert.find params[:id]
     if @email_alert.user_id != @current_user.id

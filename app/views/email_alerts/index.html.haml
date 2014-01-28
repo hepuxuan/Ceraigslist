@@ -8,6 +8,7 @@
         %th Price Max
         %th Distance
         %th Edit
+        %th Delete
       %tbody
         - @email_alerts.each do |email_alert|
           %tr
@@ -16,4 +17,5 @@
             %td= email_alert.price_max
             %td= email_alert.distance
             %td= link_to 'Edit', edit_email_alert_path(email_alert.id), class: 'btn'
+            %td= link_to 'Delete', email_alert_path(email_alert.id), class: 'btn',  method: :delete
 = link_to  'add new email alert', new_email_alert_path, class: 'btn-success btn'
