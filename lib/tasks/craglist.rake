@@ -20,7 +20,6 @@ task :download_data_from_craglish => :environment do
             product_info = ProductInfo.new(title: link.css('.pl a').text, 
               uri: "http://" + city[:city].gsub(/\s+/, '') + ".craigslist.org#{link.css('a')[0]['href']}", city: city[:city], state: city[:state], 
               source: ProductInfo::CRAGLIST, product_id: link["data-pid"], processed: false)
-
             price_text = link.css('span.price')[0]
 
             product_info.price = price_text ? price_text.text.delete('$').to_i : 0
