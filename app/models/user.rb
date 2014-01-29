@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   	user.email = user.email.downcase
   	if user.address.present?
       begin
-        geo_loc = Geokit::Geocoders::GeonamesGeocoder.geocode(user.address + ', ' +user.city + ', ' + user.state)
+        geo_loc = Geokit::Geocoders::GoogleGeocoder3.geocode(user.address + ', ' +user.city + ' ' + user.state)
         user.latitude = geo_loc.lat * RATE
         user.longitude = geo_loc.lng * RATE
       rescue
