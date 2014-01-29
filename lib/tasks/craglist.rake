@@ -51,7 +51,7 @@ task :download_data_from_craglish => :environment do
             end
             if product_info.save
 
-              if inner_doc.css('#thumbs')
+              if inner_doc.css('#thumbs').size > 0
                 inner_doc.css('#thumbs a').each do |thumb|
                   asset = Asset.new
 
@@ -63,10 +63,11 @@ task :download_data_from_craglish => :environment do
                   end
                 end
               else
-                if inner_doc.css('#ci')
+                image = inner_doc.css('#iwi')
+                if image.size > 0
                   asset = Asset.new
                   asset.product_info_id = product_info.id
-                  asset.crag_uri = thumb['href']
+                  asset.crag_uri = image.first['src']
                   unless asset.save
                     asset.errors.full_messages.each {|e| puts e}
                   end
