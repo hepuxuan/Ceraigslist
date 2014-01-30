@@ -10,6 +10,10 @@ class UsersController < ApplicationController
   end
 
   def update
+    if params[:id] != @current_user.id
+      flash[:notice] = 'permission denied'
+      redirect_to edit_user_path(@current_user.id)
+    end
     @user = User.find params[:id]
     @user.address = "#{params[:address][:address1]} #{params[:address][:address2]}"
     if @user.update_attributes params[:user]
@@ -30,7 +34,7 @@ class UsersController < ApplicationController
   		session[:email] = @user.email
       session[:timestamp] = DateTime.now()
   		flash[:notice] = 'you have successfully signed up'
-  		redirect_to product_infos_path
+  		redirect_to edit_user_path(@user.id)
   	else
   	  flash[:error] = ''
       @user.errors.full_messages.each do |error|
