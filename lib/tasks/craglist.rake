@@ -1,19 +1,20 @@
 # coding: UTF-8
 require 'open-uri'
 task :download_data_from_craglish => :environment do
-  puts 'get data form kasascity craglist'
+  puts 'get data form craglist'
   ERRORS = [OpenURI::HTTPError]
   citys = [{state: 'Missouri', city: 'kansas city'}, {state: 'Iowa', city: 'iowa city'}, {state: 'Iowa', city: 'cedar rapids'}, 
     {state: 'Iowa', city: 'des moines'}, {state: 'Iowa', city: 'dubuque'}, {state: 'Iowa', city: 'fort dodge'}, {state: 'Iowa', city: 'mason city'}, 
     {state: 'Iowa', city: 'sioux city'}, {state: 'Iowa', city: 'quad cities'}, {state: 'Iowa', city: 'ottumwa'}, {state: 'Iowa', city: 'waterloo'}]
   baseuri = '.craigslist.org/sss/'
   uris = [].push baseuri
-  (1..10).to_a.each do |num|
+  (1..2).to_a.each do |num|
     uris.push "#{baseuri}index#{(num*100).to_s}.html"
   end
 
   begin
     citys.each do |city|
+      puts "processing #{city[:city]} #{city[:state]}"
       uris.each do |baseuri|
         uri = 'http://' + city[:city].gsub(/\s+/, '') + baseuri
         doc = Nokogiri::HTML(open(uri))
