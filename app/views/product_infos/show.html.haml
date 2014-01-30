@@ -30,4 +30,4 @@
           = link_to image_tag(asset.image.url(:thumb)), asset.image.url, class: 'product_img_link'
     .product_description
       %p= @product_info.body
-      %p= "location: #{@product_info.address} #{@product_info.city} #{@product_info.state}"
+      %p= "location: #{@product_info.address}"
