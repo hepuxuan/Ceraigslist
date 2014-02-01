@@ -3,6 +3,7 @@ require 'open-uri'
 task :download_data_from_craglish => :environment do
   puts 'get data form craglist'
   ERRORS = [OpenURI::HTTPError]
+  RATE = 0.0174532925
   citys = [{state: 'Missouri', city: 'kansas city'}, {state: 'Iowa', city: 'iowa city'}, {state: 'Iowa', city: 'cedar rapids'}, 
     {state: 'Iowa', city: 'des moines'}, {state: 'Iowa', city: 'dubuque'}, {state: 'Iowa', city: 'fort dodge'}, {state: 'Iowa', city: 'mason city'}, 
     {state: 'Iowa', city: 'sioux city'}, {state: 'Iowa', city: 'quad cities'}, {state: 'Iowa', city: 'ottumwa'}, {state: 'Iowa', city: 'waterloo'}]
@@ -15,6 +16,7 @@ task :download_data_from_craglish => :environment do
   begin
     citys.each do |city|
       puts "processing #{city[:city]} #{city[:state]}"
+      default_geo_loc = Geokit::Geocoders::GoogleGeocoder3.geocode "#{city[:city]} , #{city[:state]}"
       uris.each do |baseuri|
         uri = 'http://' + city[:city].gsub(/\s+/, '') + baseuri
         puts uri
@@ -39,6 +41,17 @@ task :download_data_from_craglish => :environment do
                 product_info.address = address
               else
                 product_info.address = city[:city] + ' ' + city[:state]
+              end
+            end
+
+            geo_loc = Geokit::Geocoders::GoogleGeocoder3.geocode product_info.address
+            if geo_loc.lat && geo_loc.lng
+              product_info.latitude = geo_loc.lat * RATE
+              product_info.longitude = geo_loc.lng * RATE
+            else
+              if default_geo_loc
+                product_info.latitude = default_geo_loc.lat * RATE
+                product_info.longitude = default_geo_loc.lng * RATE
               end
             end
             

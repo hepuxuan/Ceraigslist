@@ -10,7 +10,7 @@ class ProductInfo < ActiveRecord::Base
   LOCAL = 0
   CRAGLIST = 1
   before_save do |product_info|
-  	if product_info.address.present?
+  	if product_info.address.present? && (!product_info.longitude) && (!product_info.latitude)
       begin
         geo_loc = Geokit::Geocoders::GoogleGeocoder3.geocode product_info.address
         if geo_loc.lat && geo_loc.lng
