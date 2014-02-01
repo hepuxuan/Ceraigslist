@@ -17,6 +17,7 @@ task :download_data_from_craglish => :environment do
       puts "processing #{city[:city]} #{city[:state]}"
       uris.each do |baseuri|
         uri = 'http://' + city[:city].gsub(/\s+/, '') + baseuri
+        puts uri
         doc = Nokogiri::HTML(open(uri))
         doc.css('p.row').each do |link|
           if ProductInfo.where(product_id: link["data-pid"].to_i).empty?
