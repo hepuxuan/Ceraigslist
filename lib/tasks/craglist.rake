@@ -1,5 +1,6 @@
 # coding: UTF-8
 require 'open-uri'
+DAY_RANGE = 5
 task :download_data_from_craglish => :environment do
   puts 'get data form craglist'
   ERRORS = [OpenURI::HTTPError]
@@ -49,7 +50,8 @@ task :download_data_from_craglish => :environment do
               product_info.latitude = geo_loc.lat * RATE
               product_info.longitude = geo_loc.lng * RATE
             else
-              if default_geo_loc
+              if default_geo_loc.lat && default_geo_loc.lng
+                puts 'using default'
                 product_info.latitude = default_geo_loc.lat * RATE
                 product_info.longitude = default_geo_loc.lng * RATE
               end
@@ -63,7 +65,7 @@ task :download_data_from_craglish => :environment do
                 product_info.post_date = DateTime.parse(post_text)
               end
             end
-            if product_info.post_date < 30.days.ago
+            if product_info.post_date < DAY_RANGE.days.ago
               break
             end
             if product_info.save
@@ -143,7 +145,7 @@ end
 
 task :clean_product_info_table => :environment do
   ProductInfo.all.each do |product_info|
-    if product_info.source == ProductInfo::CRAGLIST && product_info.post_date < 5.days.ago
+    if product_info.source == ProductInfo::CRAGLIST && product_info.post_date < DAY_RANGE.days.ago
       product_info.destroy
     end
   end
