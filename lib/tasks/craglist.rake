@@ -1,10 +1,10 @@
 # coding: UTF-8
 require 'open-uri'
 DAY_RANGE = 5
+RATE = 0.0174532925
 task :download_data_from_craglish => :environment do
   puts 'get data form craglist'
   ERRORS = [OpenURI::HTTPError]
-  RATE = 0.0174532925
   citys = [{state: 'Missouri', city: 'kansas city'}, {state: 'Iowa', city: 'iowa city'}, {state: 'Iowa', city: 'cedar rapids'}, 
     {state: 'Iowa', city: 'des moines'}, {state: 'Iowa', city: 'dubuque'}, {state: 'Iowa', city: 'fort dodge'}, {state: 'Iowa', city: 'mason city'}, 
     {state: 'Iowa', city: 'sioux city'}, {state: 'Iowa', city: 'quad cities'}, {state: 'Iowa', city: 'ottumwa'}, {state: 'Iowa', city: 'waterloo'}]
@@ -108,7 +108,6 @@ end
 
 task :send_email_alert => :environment do
   MILE_TO_M = 1609.344
-  RATE = 0.0174532925
   User.all.each do |user|
     product_infos = []
     user.email_alerts.each do |email_alert|
