@@ -10,7 +10,7 @@ task :download_data_from_craglish => :environment do
     {state: 'Iowa', city: 'sioux city'}, {state: 'Iowa', city: 'quad cities'}, {state: 'Iowa', city: 'ottumwa'}, {state: 'Iowa', city: 'waterloo'}]
   baseuri = '.craigslist.org/sss/'
   uris = [].push baseuri
-  (1..10).to_a.each do |num|
+  (1..100).to_a.each do |num|
     uris.push "#{baseuri}index#{(num*100).to_s}.html"
   end
 
