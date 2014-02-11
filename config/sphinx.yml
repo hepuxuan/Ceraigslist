@@ -1,0 +1,4 @@
+development:
+  max_matches: 10000
+production:
+  max_matches: 10000
