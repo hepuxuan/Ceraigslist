@@ -19,10 +19,10 @@ class ProductInfosController < ApplicationController
       if params[:distance].present? && @current_user && @current_user.latitude && @current_user.longitude
         distance = params[:distance].to_f * MILE_TO_M
         @product_infos = ProductInfo.search params[:search], geo: [@current_user.latitude * RATE, @current_user.longitude * RATE], with: {:geodist => 0.0..distance, price: price_min..price_max},
-          order: order, page: params[:page], per_page: per_page, :max_matches => 10000
+          order: order, page: params[:page], per_page: per_page
       else
         @product_infos = ProductInfo.search params[:search], with: {price: price_min..price_max},
-          order: order, page: params[:page], per_page: per_page, :max_matches => 10000
+          order: order, page: params[:page], per_page: per_page
       end
     elsif params[:tag].present?
       @product_infos = ProductInfo.tagged_with(params[:tag]).where('price <= ? AND price >= ?', price_max, price_min).order(order).paginate(:page => params[:page], per_page: per_page)
