@@ -1,5 +1,5 @@
-task :count_tags => :environment do
-  ProductInfo.tag_counts.order('tags_count DESC').each do |tag|
-    puts "#{tag.name}:#{tag.count.to_s}"
+task :display_all_user => :environment do
+  User.All.each do |user|
+    puts "#{user.email} #{user.name} #{user.city}"
   end
 end
