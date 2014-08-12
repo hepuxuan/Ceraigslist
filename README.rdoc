@@ -1,5 +1,5 @@
 == Welcome to Ceraigslist
 
-current url: http://pacific-hamlet-3033.herokuapp.com/
+current url: http://ceraigslist.herokuapp.com/
 
 If you want to contribute to this Project, email puxuanhe@gmail.com or simply do a pull request
